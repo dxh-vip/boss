@@ -15,7 +15,6 @@ function rnd(m,n){
 	return parseInt(Math.random()*(m-n)+n);	
 }
 
-
 //加载游戏资源
 function loadImage(arr,fnSucc,fnLoad){
 	var count=0;

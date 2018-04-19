@@ -12,9 +12,9 @@ var CANNON_SIZE=[
 
 function Cannon(type){
 	this.type=type;
-	this.rotate=-30;
-	this.x=431;
-	this.y=570;
+	this.rotate=90;
+	this.x=400;
+	this.y=360;
 	this.w=CANNON_SIZE[this.type].w;
 	this.h=CANNON_SIZE[this.type].h;
 	this.cur=0;

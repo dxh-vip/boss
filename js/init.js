@@ -1,9 +1,20 @@
 window.onload=function(){
 	var oC=document.querySelector('#c1');
 	var gd=oC.getContext('2d');
+	// 可视窗口高度
+	var oCwidth = oC.offsetWidth;
+	// 可视窗口宽度
+	var oCheight = oC.offsetHeight;
+	// 炮台宽度 = 可视窗口宽度
+	// 炮台高度
+	var batteryHeight = parseInt(parseInt(oCwidth)*122/765);
+	var batteryHeight1 = parseInt(parseInt(oCwidth)*122/765*0.59);
+
+	// 设置canvas宽高
+	oC.setAttribute('width',oCwidth);
+	oC.setAttribute('height',oCheight);
 	
 	loadImage(resource,function(){
-		
 		//存放炮弹
 		var arr_bullet=[];
 		
@@ -13,22 +24,18 @@ window.onload=function(){
 		//存死鱼
 		var arr_dieFish=[];	
 		
-		
 		//存金币
 		var arr_coin=[];
 		
 		//存渔网
 		var arr_web=[];
 		
-		
 		//画炮
 		var c=new Cannon(1);
 		
 		var derection=[-1,1];
-		
 		setInterval(function(){
-			
-			gd.clearRect(0,0,oC.width,oC.height);
+			gd.clearRect(0,0,oCwidth,oCheight);
 			
 			//出鱼
 			if(Math.random()<=0.05){
@@ -49,20 +56,16 @@ window.onload=function(){
 				
 				arr_fish.push(f);
 			}
-			
-			
-			
+		
 			//画鱼
 			for(var i=0;i<arr_fish.length;i++){
 				arr_fish[i].draw(gd);	
 			}
 			
-			
 			//画炮弹
 			for(var i=0; i<arr_bullet.length;i++){
 				arr_bullet[i].draw(gd);
 			}
-			
 			
 			//画死鱼
 			for(var i=0; i<arr_dieFish.length;i++){
@@ -78,7 +81,6 @@ window.onload=function(){
 			for(var i=0; i<arr_web.length;i++){
 				arr_web[i].draw(gd);
 			}
-			
 			
 			//碰撞检测
 			for(var i=0; i<arr_fish.length;i++){
@@ -139,10 +141,8 @@ window.onload=function(){
 				}
 			}
 			
-			
-			
 			//画炮台
-			gd.drawImage(JSON['bottom'],0,0,765,72,5,oC.height-72,765,72);
+			gd.drawImage(JSON['bottom'],0,0,765,122,0,oCheight-batteryHeight1,oCwidth,batteryHeight);
 			c.draw(gd);
 			
 		},16);
