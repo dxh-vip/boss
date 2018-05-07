@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
   <meta charset="UTF-8">
   <title>Demo</title>
@@ -10,12 +11,14 @@
       margin: 0;
       padding: 0;
     }
+
     html {
       /*用于 获取 屏幕的可视宽高*/
       width: 100%;
       height: 100%;
       overflow: hidden;
     }
+
     body {
       /*让 body 初始 width 和 height 就 等于 页面可视区域的 宽高*/
       position: fixed;
@@ -24,25 +27,98 @@
       width: 100%;
       height: 100%;
     }
-    @media screen and (orientation:portrait) {
-      /*竖屏样式*/
-      body {
-        transform-origin: 0 0;
-        transform: rotateZ(90deg) translateY(-100%);
+    canvas {
+      background: url(img/game_bg_2_hd.jpg) no-repeat center center;
+      background-size: cover;
+    }
+
+    @keyframes rotation {
+      10% {
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg)
+      }
+      40% {
+        transform: rotate(90deg);
+        -webkit-transform: rotate(90deg)
+      }
+      60% {
+        transform: rotate(0);
+        -webkit-transform: rotate(0)
+      }
+      80% {
+        transform: rotate(90deg);
+        -webkit-transform: rotate(90deg)
+      }
+      100% {
+        transform: rotate(0);
+        -webkit-transform: rotate(0)
       }
     }
-    canvas{background:url(img/game_bg_2_hd.jpg) no-repeat center center;background-size:cover;}
+
+    .mod-orient-layer {
+      display: none;
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: #000;
+      z-index: 9997
+    }
+
+    .mod-orient-layer__content {
+      position: absolute;
+      width: 100%;
+      top: 45%;
+      margin-top: -75px;
+      text-align: center
+    }
+
+    .mod-orient-layer__icon-orient {
+      display: inline-block;
+      width: 67px;
+      height: 109px;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIYAAADaCAMAAABU68ovAAAAXVBMVEUAAAD29vb////x8fH////////x8fH5+fn29vby8vL////5+fn39/f6+vr////x8fH////////+/v7////09PT////x8fH39/f////////////////////x8fH///+WLTLGAAAAHXRSTlMAIpML+gb4ZhHWn1c2gvHBvq1uKJcC6k8b187lQ9yhhboAAAQYSURBVHja7d3blpowFIDhTUIAOchZDkre/zE7ycySrbUUpsRN2/1fzO18KzEqxEVgTiZNfgmmtxRc8iaR8HNe8x4BtjQePKayYCIoyBSgvNNE1AkNSHqZyLqk97EgUCCHBzZ5mkg7ScvIJuIyOyXBRFxgpqWZyGsAZLB1KjsJi8nutHU4JCRbFRH8tmirI9k8Jx2sqNs8K/m0LQkrktO2crgcgXGB4AiTEsB0hJfo9MGgX7CGcYiYwQxmMOOvZwRhBG8tCoMXjBDeXvWCEcHbi14wgCBmMIMZzGAGM5jxETNwzMAxA8cMHDNwzMAxA8cMHDNwzMAxA8cMHDNwzMAxY6E2rUQxnH2tz9cirlJFwFBJedaPnUv0M7++egPDE8iAJcIDmxwH5wwv9vUviw2kLbVO3TJU5uul/EyB0FoLp4x60PdGUd3qPurrWyjGGTc05u+1dcgI7/+tCCPARWGhH7o5Y7RCf+bH9ctXLp6v2BVDxfqz0oPXeSVaNtINo/1SXDv4dck8IIkbhtC2ol+iouEonTBCbYvVMnXOjxww6s/RFrBUpXHh/gw1rHj5d/qhYn9Gpk2FWh6xRBRX5Oj3Znh2Sq49/L6+y8pB26q9GbE2dbA2mVbx6I+7MfBglLCttm73ZQi7AD3iL4HqjFYJHSPRppqaUaJ3ATpGa+ckpGak2hRRMyqjGMkvl+xyFeSMwjAqcsZgGDdyhl0oNTnDN4yenJGZFGxNChP5/Y3efh6SM2rDOJMzboYxkDMqwyjIGcIw6F+io2FU1IxIm1JqRmgXSkvNKNCXeTpGrU0JNSO2c6LIGPgCS8AuDHz9ta0SXWDtxoDRH+MqlbC2Dt2G2JFRadtQZt2qq/orGowdGb2euxYiqWEpVWhTBnszoNAPdStuQwxqf0aocdWKW4Z+DfszIh8pxJqbuCE4YAC+4bm0evtipjpgJHeFnyyt1Ku2xa0bhjxr27p75rECNwyI9ZwvXkHq+7aTaMEV44YYy/spfgjgjNHaWW+GeUhGEX7tLlVinIFDDSgnOwhi1V6bU0b6tVS9eAERe863g4dRrtiHdc6o+nn5vtyVVgR79Cqt4uL6gfHPQyGqtP2vf7HADGbcYwaOGThm4JiBYwaOGThm4JiBYwaOGThm4JiBYwaOGThm4JiBYwaOGThm4JjhtOM+J/AgT008yDMkN/dPP9hzS8zAMQN3OEYeekp5YU7KOKXwVXqiY+QS7smcinGKABWdiBgpPJTSMHJ4KidhhPBUSMLw4CmPhKHgKUXCkHsygum71ftNSgCX6bsl8FQyfbcL5EdYsDk0R3j7aiA5wpt5AjKg/2gLJEBD/0Hf2OOf/vRrj6z/7GtP4B3nMKyjHA12kIPSjnJs3FEO0TvKkYJHOWCR+rjJH0Vn6fI5PjNbAAAAAElFTkSuQmCC');
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -webkit-animation: rotation infinite 2.5s ease-in-out;
+      animation: rotation infinite 2.5s ease-in-out;
+      -webkit-background-size: 67px;
+      background-size: 67px
+    }
+
+    .mod-orient-layer__desc {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #fff
+    }
+
+    .mod-orient-layer__desc {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #fff
+    }
   </style>
 </head>
+
 <body>
   <canvas id="c1" width="667" height="375"></canvas>
+  <div id="orientLayer" class="mod-orient-layer" style="display: block;">
+    <div class="mod-orient-layer__content">
+      <i class="icon mod-orient-layer__icon-orient"></i>
+
+      <div class="mod-orient-layer__desc">为了更好的体验，请使用横屏浏览</div>
+    </div>
+  </div>
   <script>
     (function () {
       function resize() {
         var body = document.getElementsByTagName('body')[0];
         var html = document.getElementsByTagName('html')[0];
         var width = html.clientWidth;
-        var height =  html.clientHeight;
+        var height = html.clientHeight;
         var max = width > height ? width : height;
         var min = width > height ? height : width;
         body.style.width = max + "px";
@@ -61,5 +137,31 @@
   <script src="js/coin.js"></script>
   <script src="js/web.js"></script>
   <script src="js/init.js"></script>
+  <script>
+    var orientLayer = document.getElementById("orientLayer");
+    //判断横屏竖屏
+    function checkDirect() {
+      if (document.documentElement.clientHeight >= document.documentElement.clientWidth) {
+        return "portrait";
+      } else {
+        return "landscape";
+      }
+    }
+    //显示屏幕方向提示浮层
+    function orientNotice() {
+      var orient = checkDirect();
+      if (orient != "portrait") {
+        orientLayer.style.display = "none";
+      } else {
+        orientLayer.style.display = "block";
+      }
+    }
+    function init() {
+      orientNotice();
+      window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function () { setTimeout(orientNotice, 200); })
+    }
+    init();
+  </script>
 </body>
+
 </html>
