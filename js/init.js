@@ -36,7 +36,7 @@ window.onload = function() {
     if (orient != 'portrait') {
       orientLayer.style.display = 'none';
     } else {
-      orientLayer.style.display = 'block';
+      orientLayer.style.display = 'none';
     }
   }
   loadImage(resource, function() {
@@ -149,10 +149,10 @@ window.onload = function() {
             web.y = y;
             arr_web.push(web);
 
-            //创建音频
-            var oA = new Audio();
-            oA.src = 'snd/coin.wav';
-            oA.play();
+            // //创建音频
+            // var oA = new Audio();
+            // oA.src = 'snd/coin.wav';
+            // oA.play();
 
             arr_fish.splice(i, 1);
             i--;
@@ -194,9 +194,9 @@ window.onload = function() {
       oBullet.rotate = c.rotate;
       arr_bullet.push(oBullet);
 
-      var oA = new Audio();
-      oA.src = 'snd/cannon.mp3';
-      oA.play();
+      // var oA = new Audio();
+      // oA.src = 'snd/cannon.mp3';
+      // oA.play();
     };
   });
   function init() {
