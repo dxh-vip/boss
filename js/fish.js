@@ -34,7 +34,7 @@
 				gd.scale(1,-1);
 			}
 
-			gd.drawImage(JSON['fish'+this.type],0,this.cur*h,w,h,-w/2,-h/2,w,h);
+			gd.drawImage(JSON['fish'+this.type],0,this.cur*h,w,h,-w/2,-h/2,w/1.5,h/1.5);
 			gd.restore();
 		};
 

@@ -6,7 +6,7 @@ function DieFish(type){
 	this.w=0;
 	this.rotate=0;
 	this.cur=0;
-	
+
 	this.move();
 }
 DieFish.prototype.draw=function(gd){
@@ -19,14 +19,14 @@ DieFish.prototype.draw=function(gd){
 	console.log(this.h);
 	gd.drawImage(JSON['fish'+this.type],
 		0,(this.cur+4)*this.h,this.w,this.h,
-		-this.w/2,-this.h/2,this.w,this.h);
-	
-	gd.restore();	
+		-this.w/2,-this.h/2,this.w/1.5,this.h/1.5);
+
+	gd.restore();
 }
 DieFish.prototype.move=function(){
 	var _this=this;
 	setInterval(function(){
 		_this.cur++;
-		_this.cur%=4;	
+		_this.cur%=4;
 	},200);
 };
