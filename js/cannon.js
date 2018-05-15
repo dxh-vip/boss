@@ -17,8 +17,8 @@ var oCheight = getClientHeight();
 function Cannon(type) {
   this.type = type;
   this.rotate = 90;
-	this.x = oCwidth / 2 + CANNON_SIZE[this.type].w/2;
-	this.y = oCheight - CANNON_SIZE[this.type].h/2+10;
+  this.x = oCheight / 2 + CANNON_SIZE[this.type].w/2;
+  this.y = oCwidth - CANNON_SIZE[this.type].h/2+10;
   this.w = CANNON_SIZE[this.type].w;
   this.h = CANNON_SIZE[this.type].h;
   this.cur = 0;
