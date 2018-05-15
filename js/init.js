@@ -21,6 +21,7 @@ window.onload = function() {
       return 'landscape';
     }
   }
+
   //显示屏幕方向提示浮层
   function orientNotice() {
     var orient = checkDirect();
@@ -30,6 +31,7 @@ window.onload = function() {
       orientLayer.style.display = 'block';
     }
   }
+
   loadImage(resource, function() {
     //存放炮弹
     var arr_bullet = [];
@@ -46,23 +48,27 @@ window.onload = function() {
     //存渔网
     var arr_web = [];
 
+    var derection = [-1, 1];
+
     //画炮
     var c = new Cannon(1);
-
-    var derection = [-1, 1];
     setInterval(function() {
       var orient = checkDirect();
+      oCwidth = getClientWidth();
+      oCheight = getClientHeight();
+      gd.clearRect(0, 0, oCwidth, oCheight);
+      oC.setAttribute('width', oCwidth);
+      oC.setAttribute('height', oCheight);
+      batteryHeight = parseInt(parseInt(oCwidth) * 122 / 765);
+      batteryHeight1 = parseInt(parseInt(oCwidth) * 122 / 765 * 0.59);
+      c.x = oCwidth / 2 + CANNON_SIZE[c.type].w / 2;
+      c.y = oCheight - CANNON_SIZE[c.type].h / 2 + 10;
       if (orient != 'portrait') {
-        oCwidth = getClientWidth();
-        oCheight = getClientHeight();
-        oC.setAttribute('width', oCwidth);
-        oC.setAttribute('height', oCheight);
-        gd.clearRect(0, 0, oCwidth, oCheight);
         //出鱼
         if (Math.random() <= 0.05) {
           var f = new Fish(rnd(1, 6));
 
-          derection.sort(function () {
+          derection.sort(function() {
             return Math.random() - 0.5;
           });
 
@@ -118,7 +124,7 @@ window.onload = function() {
 
               arr_dieFish.push(dieFish);
 
-              setTimeout(function () {
+              setTimeout(function() {
                 arr_dieFish.shift();
                 arr_web.shift();
               }, 500);
@@ -134,11 +140,6 @@ window.onload = function() {
               web.x = x;
               web.y = y;
               arr_web.push(web);
-
-              // //创建音频
-              // var oA = new Audio();
-              // oA.src = 'snd/coin.wav';
-              // oA.play();
 
               arr_fish.splice(i, 1);
               i--;
@@ -157,24 +158,6 @@ window.onload = function() {
           0,
           oCheight - batteryHeight1,
           oCwidth,
-          batteryHeight
-        );
-        c.draw(gd);
-      } else {
-        oCwidth = getClientWidth();
-        oCheight = getClientHeight();
-        oC.setAttribute('width', oCwidth);
-        oC.setAttribute('height', oCheight);
-        gd.clearRect(0, 0, oCwidth, oCheight);
-        gd.drawImage(
-          JSON['bottom'],
-          0,
-          0,
-          765,
-          122,
-          0,
-          oCwidth - batteryHeight1,
-          oCheight,
           batteryHeight
         );
         c.draw(gd);
@@ -204,11 +187,16 @@ window.onload = function() {
       // oA.play();
     });
   });
+
   function init() {
     orientNotice();
     window.addEventListener(
       'onorientationchange' in window ? 'orientationchange' : 'resize',
       function() {
+        oCwidth = getClientWidth();
+        oCheight = getClientHeight();
+        c = new Cannon(1, oCwidth, oCheight);
+        console.log(c);
         setTimeout(orientNotice, 50);
       }
     );

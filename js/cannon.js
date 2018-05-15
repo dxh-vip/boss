@@ -9,11 +9,9 @@ var CANNON_SIZE = [
   { w: 74, h: 90 },
   { w: 74, h: 94 }
 ];
-// ??????
-oCwidth = getClientWidth();
-// ??????
-oCheight = getClientHeight();
 
+oCwidth = getClientWidth();
+oCheight = getClientHeight();
 function Cannon(type) {
   this.type = type;
   this.rotate = 90;
@@ -39,6 +37,17 @@ Cannon.prototype.draw = function(gd) {
     this.w / 1.5,
     this.h / 1.5
   );
+  // gd.drawImage(
+  //   JSON['bottom'],
+  //   0,
+  //   0,
+  //   765,
+  //   122,
+  //   0,
+  //   oCheight - batteryHeight1,
+  //   oCwidth,
+  //   batteryHeight
+  // );
   gd.restore();
 };
 Cannon.prototype.emitChange = function() {
